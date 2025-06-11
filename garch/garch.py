@@ -1,4 +1,4 @@
-# garch.py
+# garch.py HIMEL
 import pandas as pd
 import numpy as np
 import os
@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 # Add the project root to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from garch.garch_functions import garch_data_prep, train_garch_model
+from garch_functions import garch_data_prep, train_garch_model
 
 # Load the intraday data
 data_path = os.path.join("data", "SPY_15min_intraday.csv")
