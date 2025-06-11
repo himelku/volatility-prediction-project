@@ -16,7 +16,7 @@ from kerastuner.tuners import RandomSearch
 
 # Load intraday data
 data_path = os.path.join("data", "SPY_15min_lstm.csv")
-df = pd.read_excel(data_path)
+df = pd.read_csv(data_path)
 df["Date"] = pd.to_datetime(df["Date"])
 
 # Prepare features and target
