@@ -1,27 +1,46 @@
-# 📊 Volatility Prediction Project
+# 📊 Intraday Volatility Forecasting with Hybrid GARCH-LSTM-VIX Models  
+**A 15-Minute Interval Prediction Framework for SPY ETF using Statistical and Deep Learning Models**
 
-This project implements **intraday volatility forecasting** using **LSTM-GARCH** and **VIX** models on **15-minute SPY data**. The pipeline combines time-series preprocessing, GARCH volatility estimation, and deep learning (LSTM) architectures, exploring sensitivity analysis on lookback windows, loss functions, and model architectures.
+## 🧠 Project Overview
 
-## 🚀 Features
+This research project presents a robust intraday volatility forecasting pipeline using 15-minute interval data from the **SPY ETF**. It integrates statistical modeling (**GARCH**), deep learning (**LSTM**), and macroeconomic volatility indicators (**VIX**) to provide accurate short-term volatility predictions.
 
-- **GARCH model** for initial volatility estimation
-- **LSTM model** for capturing non-linear patterns
-- Integration of **VIX** data for enhanced market context
-- Sensitivity tests: lookback windows, loss functions (MAE vs MSE), LSTM layers, activation functions
-- Evaluation metrics: MAE, RMSE, time-series plots
+The objective is to demonstrate how combining econometric techniques with deep learning and market sentiment proxies improves predictive power in high-frequency financial time series.
 
-## 📁 Project Structure
+---
+
+## 🚀 Key Features
+
+- ✅ **GARCH** model to capture mean-reverting conditional volatility
+- ✅ **LSTM** neural networks to capture nonlinear temporal dependencies
+- ✅ **VIX (Volatility Index)** used as an exogenous feature to enrich contextual information
+- ✅ Modular architecture with sensitivity experiments:
+  - Lookback windows (5, 22, 66)
+  - Loss functions (MAE vs MSE)
+  - LSTM architectures (layers, activations)
+- ✅ Visualized model comparisons and tabulated evaluation metrics:
+  - Mean Absolute Error (MAE)
+  - Root Mean Squared Error (RMSE)
+
+---
+
+## 🗂️ Project Directory Structure
 
 ```
 volatility_prediction_project/
 │
+├── fetch_intraday_data.py
+├── fetch_vix_15min.py
+├── get_best_hyperparameters.py
+├── project.ipynb
+|
 ├── data/
 │   ├── SPY_15min_intraday.csv
 │   ├── SPY_15min_lstm.csv
 │   ├── vix_15min.csv
 │   ├── results_garch_intraday.csv
 │   ├── results_lstm_garch_intraday.csv
-│   └── ... (all results CSVs)
+│   └── ... 
 │
 ├── garch/
 │   ├── garch_functions.py
@@ -29,50 +48,77 @@ volatility_prediction_project/
 ├── lstm/
 │   ├── LSTM.py
 │
+├── lstm_garch/
+│   ├── lstm_garch_intraday.py
+|
+├── lstm_garch_vix/
+│   ├── lstm_garch_vix_intraday.py
+|
+├── model_tuning_intraday/
+│   ├── LSTM_Tuning_intraday
+|
+├── models_comparison/
+│   ├── models_comparison.py
+|
+├── plots/
+│   ├── lstm_garch_intraday.png
+    ├── lstm_garch_intraday.png
+    ├── ...
+|
+
 ├── sensitivity/
 │   ├── sensitivity_model_function.py
-│
-├── scripts/
-│   ├── train_lstm_garch_vix.py
-│   ├── evaluate_models.py
-│
+    ├── layer_1.py
+    ├── ...
+|
 ├── requirements.txt
 └── README.md
 ```
+---
 
-## 🖥️ How to Run in Google Colab
+## 💻 How to Run in Google Colab or Locally
 
-1. Clone the repository:
-   ```python
-   !git clone https://github.com/yourusername/volatility-prediction-project.git
-   %cd volatility-prediction-project
-   ```
+<instructions... same as before>
 
-2. Install dependencies:
-   ```python
-   !pip install -r requirements.txt
-   ```
+---
 
-3. Run the training script:
-   ```python
-   !python scripts/train_lstm_garch_vix.py
-   ```
+## 🧪 Sensitivity Experiments
 
-4. Run the evaluation script:
-   ```python
-   !python scripts/evaluate_models.py
-   ```
+<same content...>
 
-## 📝 Notes
+---
 
-- All input datasets and results files should be in the `data/` folder.
-- Adjust lookback windows, model architectures, and evaluation metrics via the `scripts/` folder.
-- For visualization and metrics, refer to the **evaluate_models.py** script.
+## 📊 Model Evaluation Metrics
 
-## 🤝 Contributing
+<same content...>
 
-Feel free to open issues, fork, and submit pull requests!
+---
 
-## 📜 License
+## 📝 Notes and Recommendations
 
-MIT License (replace with your preferred license)
+- All datasets and result files are stored in the `data/` directory.
+- Adjust model parameters and sensitivity configs under `sensitivity/` and `lstm/`.
+- Use GPU runtime in Colab for faster training (~2–3 mins per model).
+- Make sure to run **all variant scripts** before executing the final comparison.
+
+---
+
+## 📚 References
+
+- Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity. _Journal of Econometrics_
+- Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. _Neural computation_
+- CBOE Market Volatility Index (VIX) as a risk proxy
+- GitHub Project Referenced: [Volatility Forecasting](https://github.com/) – Some model logic and architectural design ideas were adapted from this project. All implementation here has been independently modified and documented for academic purposes.
+
+---
+
+## 📅 Project Info
+
+**Course**: Thesis Project – MQIM, University of New Brunswick  
+**Contributor**: Md Mahmudul Hasan
+**Year**: 2025  
+**License**: MIT
+
+---
+
+© 2025 – University of New Brunswick | Master of Quantitative Investment Management
