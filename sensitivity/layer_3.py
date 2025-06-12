@@ -205,6 +205,6 @@ for i in range(len(df) - initial_train_size - validation_size - 1):
     counter += 1
 
 # Save results
-results_path = os.path.join(data_dir, "results_lstm_garch_vix_3_layer_intraday.csv")
+results_path = os.path.join(data_dir, "results_lstm_garch_vix_layer_3_intraday.csv")
 pd.DataFrame(results).to_csv(results_path, index=False)
 print(f"Results saved to {results_path}")
