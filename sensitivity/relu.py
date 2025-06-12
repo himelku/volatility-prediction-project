@@ -15,8 +15,7 @@ from lstm.lstm_functions import create_dataset, should_retrain
 
 # ------------------ Load the Datasets ------------------ #
 data_dir = os.path.join("data")
-results_dir = os.path.join("results")
-os.makedirs(results_dir, exist_ok=True)
+os.makedirs(data_dir, exist_ok=True)
 
 # SPY LSTM data
 sp_lstm_path = os.path.join(data_dir, "SPY_15min_lstm.csv")
@@ -63,7 +62,7 @@ validation_size = 7 * steps_per_day      # ~1 week of 15min data
 X, y = create_dataset(df[feature_columns], df[target_column].values.reshape(-1, 1), time_steps)
 
 input_shape = (time_steps, X.shape[2])
-model_save_path = os.path.join(results_dir, "lstm_garch_vix_relu.weights.h5")
+model_save_path = os.path.join(data_dir, "lstm_garch_vix_relu.weights.h5")
 
 early_stopping = EarlyStopping(monitor="val_loss", patience=10, restore_best_weights=True)
 
@@ -125,6 +124,6 @@ for i in range(len(df) - initial_train_size - validation_size - 1):
     counter += 1
 
 # Save results
-results_path = os.path.join(results_dir, "results_lstm_garch_vix_relu.csv")
+results_path = os.path.join(data_dir, "results_lstm_garch_vix_relu.csv")
 pd.DataFrame(results).to_csv(results_path, index=False)
 print(f"Results saved to {results_path}")
