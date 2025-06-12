@@ -31,8 +31,7 @@ def create_model_sensitivity(input_shape):
 
 # ------------------ Load Datasets ------------------ #
 data_dir = os.path.join("data")
-results_dir = os.path.join("results")
-os.makedirs(results_dir, exist_ok=True)
+os.makedirs(data_dir, exist_ok=True)
 
 sp_lstm_path = os.path.join(data_dir, "SPY_15min_lstm.csv")
 sp_lstm = pd.read_csv(sp_lstm_path)
@@ -98,7 +97,7 @@ validation_size = 7 * steps_per_day
 X, y = create_dataset(df[feature_columns], df[target_column].values.reshape(-1, 1), time_steps)
 input_shape = (time_steps, X.shape[2])
 
-model_save_path = os.path.join(results_dir, "lstm_garch_vix_seq_length_66.weights.h5")
+model_save_path = os.path.join(data_dir, "lstm_garch_vix_seq_length_66.weights.h5")
 early_stopping = EarlyStopping(monitor="val_loss", patience=10, restore_best_weights=True)
 
 results = []
@@ -173,6 +172,6 @@ for i in range(len(df) - initial_train_size - validation_size - 1):
     counter += 1
 
 # ------------------ Save Results ------------------ #
-results_path = os.path.join(results_dir, "results_lstm_garch_vix_lookback_66.csv")
+results_path = os.path.join(data_dir, "results_lstm_garch_vix_lookback_66.csv")
 pd.DataFrame(results).to_csv(results_path, index=False)
 print(f"\n✅ Results saved to: {results_path}")
