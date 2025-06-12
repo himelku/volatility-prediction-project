@@ -107,7 +107,6 @@ volatility_prediction_project/
 
 - Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity. _Journal of Econometrics_
 - Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. _Neural computation_
-- CBOE Market Volatility Index (VIX) as a risk proxy
 - GitHub Project Referenced: [Volatility Forecasting](https://github.com/) – Some model logic and architectural design ideas were adapted from this project. All implementation here has been independently modified and documented for academic purposes.
 
 ---
@@ -115,7 +114,7 @@ volatility_prediction_project/
 ## 📅 Project Info
 
 **Course**: Thesis Project – MQIM, University of New Brunswick  
-**Contributor**: Md Mahmudul Hasan
+**Contributor**: Md Mahmudul Hasan  
 **Year**: 2025  
 **License**: MIT
 
