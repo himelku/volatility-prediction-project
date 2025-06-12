@@ -5,54 +5,55 @@ from keras.optimizers import Adam
 
 def create_model_sensitivity(
     input_shape,
-    loss_function="mean_absolute_error",  # Default for volatility regression
+    loss_function="mean_absolute_error",  # Best for volatility regression
     learning_rate=0.001,
     lstm_layers=2,
-    activation_function="tanh",
-    output_activation="linear",  # linear is best for continuous regression
+    activation_function="relu",  # Default now set to 'relu' for intraday use
+    output_activation="linear",  # Use 'linear' for regression output
     dropout_rate=0.1,
+    units_per_layer=128,  # Default number of units per LSTM layer
 ):
-    """
-    Creates an LSTM model for volatility prediction using intraday 15-min data.
+    '''
+    Creates an LSTM model for intraday 15-min volatility forecasting.
 
     Parameters:
-    - input_shape: tuple, shape of input (time_steps, features)
-    - loss_function: loss function to compile with (default: 'mean_absolute_error')
-    - learning_rate: learning rate for Adam optimizer
-    - lstm_layers: number of stacked LSTM layers (default: 2)
-    - activation_function: activation function for LSTM layers (default: 'tanh')
-    - output_activation: activation for final Dense layer ('linear' recommended for regression)
-    - dropout_rate: dropout rate applied after each LSTM layer
+    - input_shape: tuple, e.g., (time_steps, features)
+    - loss_function: string, loss to minimize (e.g., 'mean_absolute_error')
+    - learning_rate: float, optimizer learning rate
+    - lstm_layers: int, number of stacked LSTM layers
+    - activation_function: string, LSTM activation ('relu' for fast convergence in intraday)
+    - output_activation: string, output Dense activation ('linear' for regression)
+    - dropout_rate: float, dropout rate between layers
+    - units_per_layer: int, number of LSTM units per layer
 
     Returns:
     - Compiled Keras Sequential model
-    """
+    '''
     model = Sequential()
 
     for i in range(lstm_layers):
+        return_seq = i < lstm_layers - 1
         if i == 0:
             model.add(
                 LSTM(
-                    128,
-                    return_sequences=True if lstm_layers > 1 else False,
+                    units_per_layer,
                     activation=activation_function,
-                    input_shape=input_shape,
+                    return_sequences=return_seq,
+                    input_shape=input_shape
                 )
             )
         else:
             model.add(
                 LSTM(
-                    128,
-                    return_sequences=False if i == lstm_layers - 1 else True,
+                    units_per_layer,
                     activation=activation_function,
+                    return_sequences=return_seq
                 )
             )
         model.add(Dropout(dropout_rate))
 
-    # Output layer for regression (use linear activation)
     model.add(Dense(1, activation=output_activation))
 
-    # Compile model
     optimizer = Adam(learning_rate=learning_rate)
     model.compile(optimizer=optimizer, loss=loss_function)
 

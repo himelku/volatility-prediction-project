@@ -18,23 +18,22 @@ data_dir = os.path.join("data")
 os.makedirs(data_dir, exist_ok=True)
 
 # SPY LSTM data (percentage change)
-sp_lstm_path = os.path.join(data_dir, "sp500_lstm_pct_change.xlsx")
-sp_lstm = pd.read_excel(sp_lstm_path)
+sp_lstm_path = os.path.join(data_dir, "SPY_15min_lstm.csv")
+sp_path = os.path.join(data_dir, "SPY_15min_intraday.csv")
+vix_path = os.path.join(data_dir, "vix_15min.csv")
+
+sp_lstm = pd.read_csv(sp_lstm_path)
 sp_lstm["Date"] = pd.to_datetime(sp_lstm["Date"])
 
-# SPY raw data for GARCH
-sp_path = os.path.join(data_dir, "sp500.xlsx")
-sp = pd.read_excel(sp_path)
-sp["Date"] = pd.to_datetime(sp["Date"])
+sp = pd.read_csv(sp_path)
+sp["Date"] = pd.to_datetime(sp["timestamp"])
 
-# VIX data
-vix_path = os.path.join(data_dir, "vix.xlsx")
-vix = pd.read_excel(vix_path)
+vix = pd.read_csv(vix_path)
 vix["Date"] = pd.to_datetime(vix["Date"])
 
 # ------------------ VIX ------------------ #
-vix = vix.rename(columns={"Close": "Close_vix"})
-vix.drop(columns=["Open", "High", "Low", "Adj Close", "Volume"], inplace=True)
+vix = vix.rename(columns={"close": "Close_vix"})
+vix.drop(columns=["open", "high", "low", "volume", "timestamp"], inplace=True)
 
 # ------------------ GARCH ------------------ #
 sp_garch = garch_data_prep(sp)
@@ -54,9 +53,10 @@ feature_columns = [col for col in df.columns if col not in ["volatility", "Date"
 target_column = "volatility"
 
 # ------------------ Define Parameters ------------------ #
-time_steps = 22  # Sequence length
-initial_train_size = 12 * 252  # ~12 years daily
-validation_size = 3 * 252  # ~3 years daily
+time_steps = 22  # ~1 day of 15-min intervals
+steps_per_day = 26
+initial_train_size = 21 * steps_per_day  # ~1 month
+validation_size = 7 * steps_per_day      # ~1 week
 
 X, y = create_dataset(
     df[feature_columns], df[target_column].values.reshape(-1, 1), time_steps
