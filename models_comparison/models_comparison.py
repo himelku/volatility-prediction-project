@@ -44,7 +44,7 @@ lstm_files = {
     "lstm_garch_vix": "results_lstm_garch_vix_intraday.csv",
     "lstm_garch_vix_pct_change": "results_lstm_garch_vix_pct_change.csv",
     "lstm_garch_vix_1_layer": "results_lstm_garch_vix_layer_1_intraday.csv",
-    "lstm_garch_vix_3_layers": "results_lstm_garch_vix_3_layer_intraday.csv",
+    "lstm_garch_vix_3_layers": "results_lstm_garch_vix_layer_3_intraday.csv",
     "lstm_garch_vix_lookback_5": "results_lstm_garch_vix_lookback_5.csv",
     "lstm_garch_vix_lookback_66": "results_lstm_garch_vix_lookback_66.csv",
     "lstm_garch_vix_mae_loss": "results_lstm_garch_vix_mae_loss_intraday.csv",
