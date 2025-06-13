@@ -4,6 +4,8 @@ import pandas as pd
 from arch import arch_model
 
 
+
+
 def garch_data_prep(df):
     df = df.copy()
     df = df.sort_values("Date")
