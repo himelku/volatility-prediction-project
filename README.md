@@ -33,24 +33,46 @@ volatility_prediction_project/
 ├── fetch_vix_15min.py
 ├── get_best_hyperparameters.py
 ├── project.ipynb
+├── app.py
 |
 ├── data/
-│   ├── SPY_15min_intraday.csv
+|   ├── results_ewma.csv
+|   ├── results_garch_intraday.csv
+│   ├── results_lstm_garch_ewma_vix_intraday.csv
+|   ├── results_lstm_garch_intraday.csv
+|   ├── results_lstm_garch_vix_intraday.csv
+|   ├── results_lstm_garch_vix_layer_1_intraday.csv
+|   ├── results_lstm_garch_vix_layer_3_intraday.csv
+|   ├── results_lstm_garch_vix_lookback_5_intraday.csv
+|   ├── results_lstm_garch_vix_lookback_66_intraday.csv
+|   ├── results_lstm_garch_vix_mae_loss_intraday.csv
+|   ├── results_lstm_garch_vix_pct_change_intraday.csv
+|   ├── results_lstm_garch_vix_relu.csv
+|   ├── results_lstm_intraday.csv
 │   ├── SPY_15min_lstm.csv
 │   ├── vix_15min.csv
-│   ├── results_garch_intraday.csv
-│   ├── results_lstm_garch_intraday.csv
-│   └── ... 
+│   ├── SPY_15min_intraday.csv
 │
 ├── garch/
+│   ├── garch.py
 │   ├── garch_functions.py
+│   ├── garch_parameters_choice.py
 │
 ├── lstm/
-│   ├── LSTM.py
+│   ├── lstm_functions.py
+│   ├── lstm_hyperparameters_tuning_intraday.py
+│   ├── lstm_intraday.py
+│   ├── prepare_data_lstm_intraday.py
 │
 ├── lstm_garch/
 │   ├── lstm_garch_intraday.py
 |
+├── lstm_garch_ewma_vix/
+│   ├── ewma.py
+│   ├── ewma_functions.py
+│   ├── ewma_plots.py
+│   ├── lstm_garch_ewma_vix.py
+
 ├── lstm_garch_vix/
 │   ├── lstm_garch_vix_intraday.py
 |
@@ -65,11 +87,15 @@ volatility_prediction_project/
     ├── lstm_garch_intraday.png
     ├── ...
 |
-
 ├── sensitivity/
 │   ├── sensitivity_model_function.py
     ├── layer_1.py
-    ├── ...
+│   ├── layer_3.py
+│   ├── mae_loss.py
+│   ├── pct_change_input.py
+│   ├── relu.py
+│   ├── sequence_length_5.py
+│   ├── sequence_length_66.py
 |
 ├── requirements.txt
 └── README.md
