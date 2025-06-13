@@ -151,3 +151,31 @@ plot_if_exists(["lstm_garch_vix", "lstm_garch_vix_pct_change", "lstm_garch_vix"]
 plot_if_exists(["lstm_garch_vix_lookback_66", "lstm_garch_vix", "lstm_garch_vix_lookback_5", "lstm_garch_vix"], ["Lookback 66", "Lookback 22", "Lookback 5", "Actual"], ["purple", "springgreen", "gold", "red"], ["-", "-", "-", "--"], "Lookback Comparison")
 plot_if_exists(["lstm_garch_vix_3_layers", "lstm_garch_vix", "lstm_garch_vix_1_layer", "lstm_garch_vix"], ["3 Layers", "2 Layers", "1 Layer", "Actual"], ["purple", "springgreen", "gold", "red"], ["-", "-", "-", "--"], "LSTM Layer Depth Comparison")
 plot_if_exists(["lstm_garch_vix_relu", "lstm_garch_vix", "lstm_garch_vix"], ["ReLU", "Tanh", "Actual"], ["gold", "springgreen", "red"], ["-", "-", "--"], "Activation Function Comparison")
+
+# ------------------ EWMA Evaluation ------------------ #
+ewma_path = os.path.join(data_dir, "results_ewma.csv")
+if os.path.exists(ewma_path):
+    ewma = pd.read_csv(ewma_path)
+    ewma["Date"] = pd.to_datetime(ewma["Date"])
+    if "ewma_volatility" in ewma.columns and "log_returns" in ewma.columns:
+        actual = ewma["log_returns"].rolling(26).std().dropna()
+        predicted = ewma["ewma_volatility"][25:]
+        mae = mean_absolute_error(actual, predicted)
+        rmse = np.sqrt(mean_squared_error(actual, predicted))
+        print(f"DataFrame: ewma | MAE: {mae:.6f} | RMSE: {rmse:.6f}")
+    else:
+        print("⚠️ EWMA file missing required columns.")
+else:
+    print("⚠️ results_ewma.csv not found.")
+
+# ------------------ EWMA Plot ------------------ #
+if 'ewma' in locals():
+    plot_data(
+        [ewma[["Date", "ewma_volatility"]], ewma[["Date", "log_returns"]].rolling(26).std()],
+        ["EWMA Volatility", "Rolling Std (Actual)"],
+        ["teal", "red"],
+        ["-", "--"],
+        "EWMA vs Actual Volatility",
+        "Date",
+        "Volatility"
+    )
