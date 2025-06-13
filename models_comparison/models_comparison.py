@@ -170,12 +170,23 @@ else:
 
 # ------------------ EWMA Plot ------------------ #
 if 'ewma' in locals():
+
+    # Compute rolling std only on numeric column
+    rolling_std = ewma[["log_returns"]].rolling(26).std().rename(columns={"log_returns": "rolling_std"})
+
+    # Combine with EWMA volatility (make sure 'Date' is preserved)
+    combined_ewma = pd.concat([ewma[["Date", "ewma_volatility"]], rolling_std], axis=1).dropna()
+
+    # Plotting
     plot_data(
-        [ewma[["Date", "ewma_volatility"]], ewma[["Date", "log_returns"]].rolling(26).std()],
-        ["EWMA Volatility", "Rolling Std (Actual)"],
-        ["teal", "red"],
-        ["-", "--"],
-        "EWMA vs Actual Volatility",
-        "Date",
-        "Volatility"
+        [
+            combined_ewma[["Date", "ewma_volatility"]],
+            combined_ewma[["Date", "rolling_std"]]
+        ],
+        labels=["EWMA Volatility", "Rolling Std Dev"],
+        colors=["blue", "gray"],
+        linestyles=["-", "--"],
+        title="EWMA vs Rolling Std Dev (26 periods)",
+        x_label="Date",
+        y_label="Volatility"
     )
